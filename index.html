@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DOPPLEGÄNGER</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+  <center>
+    <h1 class="title">DOPPLEGÄNGER</h1>
+    <marquee behavior="alternate" scrollamount="6" class="marq">Ils attendent. Ils savent.</marquee>
+  </center>
+
+  <div id="main">
+    <p class="lead">Vous avez un double.</p>
+
+    <div class="panel">
+      <p>Parfois, dans le reflet, quelque chose ne cligne pas.</p>
+      <p class="glitch">/ / s o m e t h i n g   w r o n g / /</p>
+      <p class="hint">Cherchez là où le nom se répète.</p>
+    </div>
+
+    <div class="bad-layout">
+      <img src="./placeholder.png" alt="image corrompue" style="width:200px;height:120px;">
+      <p>Broken.</p>
+    </div>
+
+    <hr>
+
+    <div class="form-box">
+      <form onsubmit="return fakeSubmit()">
+        <label>Nom : <input id="name" type="text" placeholder="Votre nom"></label>
+        <input type="submit" value="Envoyer">
+      </form>
+      <p class="small">(Ne rien envoyer. Si vous envoyez, lui saura.)</p>
+    </div>
+
+    <div class="footer">
+      <p>copyright © ???</p>
+      <p class="tiny">It might be behind you.</p>
+    </div>
+  </div>
+
+  <blink>  </blink>
+
+</body>
+</html>

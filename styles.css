@@ -1,0 +1,43 @@
+/* ...existing code... */
+
+:root{
+  --bg:#050405;
+  --fg:#cfcfcf;
+  --accent:#8b0000;
+}
+
+html,body{height:100%;margin:0;padding:0;background:var(--bg);color:var(--fg);font-family: 'Courier New', monospace}
+
+.title{font-size:4rem;letter-spacing:0.4rem;color:#fff;text-shadow:0 0 10px rgba(255,0,0,0.1)}
+
+.marq{color:var(--accent);font-weight:bold;margin-top:0}
+
+#main{max-width:760px;margin:20px auto;padding:20px;background:rgba(10,10,10,0.6);border:1px solid rgba(255,0,0,0.06)}
+
+.panel{background:rgba(0,0,0,0.4);padding:12px;border-left:3px solid var(--accent);margin-bottom:12px}
+
+.lead{font-size:1.6rem}
+
+.glitch{letter-spacing:0.6rem;color:#666;font-style:italic}
+
+.hint{color:#aaa;background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(0,0,0,0.2));padding:6px}
+
+.bad-layout{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,0.01);padding:8px;border:1px dashed rgba(255,255,255,0.02)}
+
+.link{display:inline-block;padding:8px 12px;background:#111;color:var(--accent);border:1px solid rgba(255,0,0,0.1);text-decoration:none}
+
+.form-box{margin-top:16px;background:rgba(255,0,0,0.02);padding:8px}
+
+.small{font-size:0.8rem;color:#777}
+
+.footer{margin-top:18px;color:#666}
+
+.tiny{font-size:0.7rem;color:#444}
+
+/* intentionally bad CSS */
+
+blink{animation:blink 1s step-start 0s infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* crude responsive */
+@media(max-width:480px){.title{font-size:2.2rem}.lead{font-size:1.1rem}}
