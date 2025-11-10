@@ -78,7 +78,7 @@ setTimeout(maybeReveal,1200);
     source.loop = true;
 
     var gain = ctx.createGain();
-    gain.gain.value = 0.06; // volume réduit (ajusté pour être moins fort)
+    gain.gain.value = -3;
 
     source.connect(gain).connect(ctx.destination);
 
