@@ -34,6 +34,12 @@ html,body{height:100%;margin:0;padding:0;background:var(--bg);color:var(--fg);fo
 
 .tiny{font-size:0.7rem;color:#444}
 
+/* Styles pour le contrôle audio */
+.audio-control{margin:10px 0 14px;display:flex;align-items:center;gap:12px}
+#audio-toggle-placeholder{display:none}
+#noise-toggle{background:#111;border:1px solid rgba(255,0,0,0.12);color:var(--fg);padding:8px 12px;border-radius:4px;cursor:pointer;font-family:inherit}
+#noise-toggle[aria-pressed='true']{box-shadow:0 0 8px rgba(139,0,0,0.2);background:linear-gradient(180deg,#220000,#110000)}
+
 /* intentionally bad CSS */
 
 blink{animation:blink 1s step-start 0s infinite}
