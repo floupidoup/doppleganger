@@ -248,7 +248,7 @@ setTimeout(maybeReveal,1200);
       } else {
         document.body.classList.add('decor-off');
         stopAutoBurst();
-        // also remove any existing particles
+        // aussi remove any existing particles
         var root = document.getElementById('extra-decor');
         if(root){ while(root.firstChild) root.removeChild(root.firstChild); }
       }
@@ -270,3 +270,8 @@ setTimeout(maybeReveal,1200);
   } else initToggle();
 
 })();
+
+// init toggle and other effects are left intact above
+
+// NOTE: removed the IIFE that previously forced `.card` width to match the image.
+// The layout is now handled by CSS (flex / inline-flex) so the JS sync is not necessary.

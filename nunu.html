@@ -21,36 +21,42 @@
 
     <section class="card" aria-labelledby="welcome">
       <h2 id="welcome" class="visually-hidden">Bienvenue</h2>
-      <p>Bienvenue, petit coeur. Ici, tout est doux : des fleurs, de la lumière et du calme. Respire un grand coup.</p>
 
-      <div class="flowers" aria-hidden="true">
-        <!-- Fleur principale -->
-        <svg class="flower f1" viewBox="0 0 64 64" width="80" height="80" focusable="false">
-          <g>
-            <circle cx="32" cy="32" r="10" fill="#ffd6e0" />
-            <path d="M32 8 C36 18 48 18 56 24 C46 30 46 44 36 48 C26 44 18 36 8 28 C18 20 24 12 32 8 Z" fill="#ffb6c1" opacity="0.9"/>
-          </g>
-        </svg>
+      <div class="card-inner">
+        <!-- Image du chat (à gauche) -->
+        <figure class="cute-cat" aria-labelledby="cat-caption">
+          <img src="chat.png" alt="Un chat tigré assis, regard doux" width="746" height="747" loading="lazy">
+          <figcaption id="cat-caption" class="muted">Un petit chat pour te tenir compagnie 🐾</figcaption>
+        </figure>
 
-        <!-- Petite fleur -->
-        <svg class="flower f2" viewBox="0 0 64 64" width="56" height="56" focusable="false">
-          <circle cx="32" cy="32" r="8" fill="#fff0b3" />
-          <path d="M32 8 C38 18 52 18 56 26 C44 30 44 44 36 50 C26 44 18 36 10 26 C18 18 26 10 32 8 Z" fill="#fff7d6" opacity="0.85"/>
-        </svg>
+        <!-- Contenu (à droite) -->
+        <div class="card-body">
+          <p>Bienvenue, petit coeur. Ici, tout est doux : des fleurs, de la lumière et du calme. Respire un grand coup.</p>
 
-        <!-- Mini pastille -->
-        <svg class="flower f3" viewBox="0 0 64 64" width="44" height="44" focusable="false">
-          <circle cx="32" cy="32" r="7" fill="#e0f7ff" />
-        </svg>
+          <div class="flowers" aria-hidden="true">
+            <!-- Fleur principale -->
+            <svg class="flower f1" viewBox="0 0 64 64" width="80" height="80" focusable="false">
+              <g>
+                <circle cx="32" cy="32" r="10" fill="#ffd6e0" />
+                <path d="M32 8 C36 18 48 18 56 24 C46 30 46 44 36 48 C26 44 18 36 8 28 C18 20 24 12 32 8 Z" fill="#ffb6c1" opacity="0.9"/>
+              </g>
+            </svg>
+
+            <!-- Petite fleur -->
+            <svg class="flower f2" viewBox="0 0 64 64" width="56" height="56" focusable="false">
+              <circle cx="32" cy="32" r="8" fill="#fff0b3" />
+              <path d="M32 8 C38 18 52 18 56 26 C44 30 44 44 36 50 C26 44 18 36 10 26 C18 18 26 10 32 8 Z" fill="#fff7d6" opacity="0.85"/>
+            </svg>
+
+            <!-- Mini pastille -->
+            <svg class="flower f3" viewBox="0 0 64 64" width="44" height="44" focusable="false">
+              <circle cx="32" cy="32" r="7" fill="#e0f7ff" />
+            </svg>
+          </div>
+
+          <p class="muted">Vous pouvez <a href="index.html">revenir à la page principale</a> à tout moment.</p>
+        </div>
       </div>
-
-      <!-- Image du chat ajoutée -->
-      <figure class="cute-cat" aria-labelledby="cat-caption">
-        <img src="chat.png" alt="Un chat tigré assis, regard doux" width="746" height="747" loading="lazy">
-        <figcaption id="cat-caption" class="muted">Un petit chat pour te tenir compagnie 🐾</figcaption>
-      </figure>
-
-      <p class="muted">Vous pouvez <a href="index.html">revenir à la page principale</a> à tout moment.</p>
     </section>
 
     <!-- Décorations (fleurs, étoiles, paillettes) -->
@@ -59,6 +65,21 @@
       <svg class="decor__item flower d1" viewBox="0 0 24 24" width="28" height="28" focusable="false" role="img">
         <circle cx="12" cy="12" r="3" fill="#ffd6e0" />
         <path d="M12 2 C13.5 6 17 6 20 8 C16.5 10 17 14 15 17 C12 15 9 15 5 17 C7 13 5 9 6 6 C8 4 10 2 12 2 Z" fill="#ffb6c1" opacity="0.95"/>
+      </svg>
+
+      <!-- Papillons -->
+      <svg class="decor__item butterfly b1" viewBox="0 0 24 24" width="44" height="44" focusable="false" role="img" aria-hidden="true">
+        <path d="M12 12 C9 8 3 7 3 11 C3 15 9 14 12 18 C15 14 21 15 21 11 C21 7 15 8 12 12 Z" fill="#ffd6e0" opacity="0.95"/>
+        <path d="M9 9 C7 6 4 6 4 9 C4 12 7 11 9 13" fill="#ffb6c1" opacity="0.95"/>
+        <path d="M15 9 C17 6 20 6 20 9 C20 12 17 11 15 13" fill="#fff0b3" opacity="0.95"/>
+      </svg>
+
+      <svg class="decor__item butterfly b2" viewBox="0 0 24 24" width="34" height="34" focusable="false" role="img" aria-hidden="true">
+        <path d="M12 12 C9 8 3 7 3 11 C3 15 9 14 12 18 C15 14 21 15 21 11 C21 7 15 8 12 12 Z" fill="#e0f7ff" opacity="0.95"/>
+      </svg>
+
+      <svg class="decor__item butterfly b3" viewBox="0 0 24 24" width="28" height="28" focusable="false" role="img" aria-hidden="true">
+        <path d="M12 12 C9 8 3 7 3 11 C3 15 9 14 12 18 C15 14 21 15 21 11 C21 7 15 8 12 12 Z" fill="#ffdff0" opacity="0.95"/>
       </svg>
 
       <svg class="decor__item flower d2" viewBox="0 0 24 24" width="22" height="22" focusable="false" role="img">
