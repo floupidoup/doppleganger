@@ -1,243 +1,50 @@
-:root{
-  --bg:#fff6f8; /* base très claire rose/ivoire */
-  --card: rgba(255,255,255,0.88);
-  --fg:#332f31;
-  --muted:#7a6f73;
-  --accent:#ff9fb1;
-  --rose:#ff7aa2;
-  --petal:#ffd6e0;
-  --pearl:#fff8fb;
-  --mint:#dff6ff;
-  --sky:#e6f7ff;
-  --glow: rgba(255,130,160,0.14);
-  --soft-shadow: 0 18px 40px rgba(0,0,0,0.06);
-}
+:root{--bg:#fff8f6;--card:#ffffff;--fg:#333;--muted:#6b6b6b;--accent:#ff9fb1}
 
-/* fond féerique en couches (bokeh pastel + gradients légers) */
-html,body{
-  height:100%;margin:0;padding:0;font-family: 'Georgia', serif;background:
-    radial-gradient(circle at 8% 12%, rgba(255,214,224,0.55) 0%, transparent 18%),
-    radial-gradient(circle at 80% 86%, rgba(224,247,255,0.6) 0%, transparent 15%),
-    linear-gradient(180deg, rgba(255,250,252,0.9), rgba(255,244,247,0.95));
-  background-attachment: fixed;background-size:cover;color:var(--fg);
-}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;padding:0;font-family: 'Georgia', serif;background:var(--bg);color:var(--fg)}
 
-/* délicate animation d'arrière-plan */
-@keyframes bg-breathe{
-  0%{transform:translateY(0) scale(1)}
-  50%{transform:translateY(-6px) scale(1.01)}
-  100%{transform:translateY(0) scale(1)}
-}
+.container{max-width:720px;margin:48px auto;padding:28px}
+.hero{text-align:center;margin-bottom:18px}
+.title{font-size:3rem;margin:0;color:#ff6b92;letter-spacing:0.02em}
+.title .emoji{font-size:1.2rem;margin-left:8px}
+.subtitle{margin-top:6px;color:var(--muted)}
 
-/* overlay de paillettes (faux bokeh doux) */
-.container::before{
-  content:'';position:absolute;left:-5%;right:-5%;top:-12%;bottom:-12%;pointer-events:none;z-index:0;
-  background-image:
-    radial-gradient(circle at 10% 20%, rgba(255,220,230,0.55) 0%, transparent 20%),
-    radial-gradient(circle at 80% 80%, rgba(220,245,255,0.45) 0%, transparent 18%),
-    radial-gradient(circle at 58% 14%, rgba(255,240,245,0.5) 0%, transparent 14%);
-  filter: blur(18px);mix-blend-mode:screen;opacity:0.95;transform-origin:center center;animation:bg-breathe 18s ease-in-out infinite;
-}
+.card{background:var(--card);padding:22px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.06);border:1px solid rgba(255,150,160,0.12)}
+.card p{line-height:1.6;font-size:1.05rem}
 
-/* contour dégradé animé autour de la zone centrale pour un look féerique */
-.container{max-width:420px;margin:16px auto;padding:8px;position:relative;z-index:0}
-.container::after{
-  content:'';position:absolute;inset:-10px;border-radius:20px;pointer-events:none;z-index:0;
-  background: conic-gradient(from 120deg at 50% 50%, rgba(255,126,163,0.18), rgba(255,211,230,0.14), rgba(214,246,255,0.12), rgba(255,180,200,0.12));
-  filter:blur(14px);opacity:0.9;mix-blend-mode:screen;animation:spin-slow 14s linear infinite;
-}
+.flowers{display:flex;gap:14px;align-items:center;margin:14px 0}
+.flower{filter:drop-shadow(0 6px 12px rgba(255,150,160,0.08));transform:translateY(0);transition:transform .6s ease}
+.flower:hover{transform:translateY(-6px) rotate(-6deg)}
 
-@keyframes spin-slow{ from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.muted{color:var(--muted);font-size:0.95rem}
+.foot{text-align:center;margin-top:18px;color:var(--muted)}
 
-/* Décorations flottantes (fleurs, étoiles, paillettes) */
-/* Full-viewport overlays afin d'éviter les décalages de positionnement */
-.decor{position:fixed;inset:0;pointer-events:none;overflow:visible;z-index:0}
-.decor__item{position:absolute;transform-origin:center center;filter:drop-shadow(0 6px 14px rgba(0,0,0,0.06));opacity:0.95}
+a{color:var(--accent);text-decoration:none;border-bottom:1px dashed rgba(255,160,180,0.25)}
+a:hover{opacity:0.9}
 
-/* Extra decorations container (confettis / pétales) */
-#extra-decor{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:visible}
+@media(max-width:480px){.title{font-size:2rem}.container{padding:18px;margin:28px 12px}}
 
-/* overlay de petites étincelles animées (texture légère) */
-.sparkles{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.85;mix-blend-mode:screen}
-.sparkles::before{
-  content:'';position:absolute;left:0;top:0;width:100%;height:100%;background-image:
-    radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 2px),
-    radial-gradient(circle, rgba(255,220,230,0.7) 2px, transparent 4px);
-  background-size:12px 12px, 40px 40px;opacity:0.45;filter:blur(2px);
-  animation:move-sparkles 18s linear infinite;
-}
-@keyframes move-sparkles{ 0%{transform:translateY(0) translateX(0)} 50%{transform:translateY(-8px) translateX(6px)} 100%{transform:translateY(0) translateX(0)} }
+/* petites aides accessibles (importées depuis nunu.html) */
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.skip:focus{left:10px;top:10px;width:auto;height:auto;padding:8px;background:#fff;border-radius:4px;box-shadow:0 4px 12px rgba(0,0,0,0.12)}
 
-/* Titres plus féeriques */
-.title{
-  font-size:1.6rem;margin:0;color:var(--rose);letter-spacing:0.02em;position:relative;z-index:3;
-  text-shadow: 0 2px 6px rgba(255,140,170,0.06), 0 1px 0 rgba(255,255,255,0.6) inset;
-  background: linear-gradient(90deg, var(--rose), #ffb7c9 40%, #ffd7e6 80%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; display:inline-block;
-}
-.title::after{content:'';display:block;height:8px;width:64%;margin-top:10px;border-radius:999px;background:linear-gradient(90deg, rgba(255,170,200,0.18), rgba(255,230,240,0.06));}
 
-.title .emoji{font-size:1.2rem;margin-left:8px;display:inline-block;transform-origin:center center;animation:emoji-bob 6s ease-in-out infinite}
-@keyframes emoji-bob{0%{transform:translateY(0)}50%{transform:translateY(-4px) rotate(-6deg)}100%{transform:translateY(0)}}
 
-.subtitle{margin-top:6px;color:var(--muted);font-style:italic;opacity:0.95}
 
-/* Card: plus compacte et shrinkwrap selon le contenu (respecte la taille de la photo) */
-.card{background:var(--card);display:inline-flex;align-items:flex-start;gap:14px;max-width:92%;margin:6px auto;padding:10px;border-radius:10px;box-shadow:0 5px 12px rgba(0,0,0,0.02);border:1px solid rgba(255,150,160,0.05);backdrop-filter: blur(2px);position:relative;z-index:4;text-align:left}
-.card p{line-height:1.35;font-size:0.96rem;color:var(--fg);margin:0}
 
-/* structure interne : image à gauche, contenu à droite */
-.card-inner{display:flex;align-items:flex-start;gap=14px}
-.card-body{display:flex;flex-direction:column;justify-content:flex-start;gap:10px;min-width:0}
 
-/* Forcer l'image à garder ses proportions et définir sa largeur naturelle comme référence */
-.cute-cat{margin:0;flex:0 0 auto}
-.cute-cat img{width:auto;max-width:100%;height:auto;display:block}
 
-/* Si l'image est plus large que l'écran, elle sera réduite via max-width; sinon la card gardera ses dimensions naturelles */
-@media(max-width:480px){
-  .container{max-width:92vw;padding:8px;margin:10px auto}
-  .card{display:block;width:92%;max-width:92%;padding:8px}
-  .card-inner{flex-direction:column;align-items:center}
-  .title{font-size:1.4rem}
-  .cute-cat img{max-width:220px}
-  .decor__item{display:none}
-  .container::before{display:none}
-  .container::after{display:none}
-  .sparkles{display:none}
-}
 
-/* respect des préférences d'animation */
-@media (prefers-reduced-motion: reduce){
-  .decor__item, .confetti, .flower, .emoji, .title{animation:none;transition:none}
-  .container::after, .sparkles::before{display:none}
-}
 
-/* utils: leaf sway and petal fall (reusable) */
-@keyframes leaf-sway{
-  0%{transform:translateY(0) rotate(-4deg)}
-  40%{transform:translateY(-8px) rotate(2deg)}
-  80%{transform:translateY(-4px) rotate(-1deg)}
-  100%{transform:translateY(0) rotate(-4deg)}
-}
 
-@keyframes petal-fall{
-  0%{transform:translateY(-6vh) rotate(0deg);opacity:0}
-  10%{opacity:1}
-  100%{transform:translateY(120vh) rotate(420deg);opacity:0}
-}
 
-@keyframes shimmer{
-  0%{opacity:0.1;transform:scale(.8)}
-  50%{opacity:1;transform:scale(1.15)}
-  100%{opacity:0.1;transform:scale(.8)}
-}
 
-/* MODE CALME : règles appliquées quand <body class="decor-off"> */
-body.decor-off {
-  --calm: 1;
-  background: #fff7f9; /* fond doux et neutre */
-}
-body.decor-off .decor,
-body.decor-off #extra-decor,
-body.decor-off .sparkles {
-  display: none !important;
-  opacity: 0 !important;
-}
 
-/* désactiver les animations et transitions */
-body.decor-off * {
-  animation: none !important;
-  transition: none !important;
-}
 
-/* supprimer overlays décoratifs et dégradés autour de la container */
-body.decor-off .container::before,
-body.decor-off .container::after {
-  display: none !important;
-  opacity: 0 !important;
-  background: none !important;
-}
 
-/* simplifier le titre */
-body.decor-off .title{
-  -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: unset !important;
-  color: var(--rose) !important;
-  background: transparent !important;
-  text-shadow: none !important;
-  font-weight: 600;
-}
-body.decor-off .title .emoji{display:none !important}
 
-/* simplifier la card : image centrée au-dessus, texte en dessous */
-body.decor-off .card{
-  display:block !important;
-  width:auto !important;
-  max-width:92vw !important;
-  margin:10px auto !important;
-  padding:12px !important;
-  border-radius:10px !important;
-  box-shadow:0 6px 12px rgba(0,0,0,0.03) !important;
-}
-body.decor-off .card-inner{display:block !important;padding:0}
-body.decor-off .cute-cat{display:block;text-align:center;margin:0 0 10px 0}
-body.decor-off .cute-cat img{display:inline-block;max-width:100%;height:auto;border-radius:8px}
-body.decor-off .card-body{display:block;text-align:center;padding:0}
-body.decor-off .flowers{display:none !important}
 
-/* réduire la densité des décorations si l'utilisateur réactive (transition douce possible) */
-body:not(.decor-off) .decor__item{opacity:0.95}
 
-/* Papillons : battement d'ailes et vol léger */
-.decor__item.butterfly{will-change:transform,opacity;opacity:0.98;mix-blend-mode:screen;filter:drop-shadow(0 8px 18px rgba(255,120,150,0.08))}
-.decor__item.butterfly path{transform-origin:center center}
 
-.butterfly{animation:butterfly-float 10s ease-in-out infinite, wing-flap 0.9s ease-in-out infinite}
 
-/* positions et variations */
-.decor__item.butterfly.b1{left:72%;top:14%;transform:translate(-10px,0) scale(1);animation-duration:9s,0.85s;z-index:1}
-.decor__item.butterfly.b2{left:22%;top:24%;transform:translate(0,0) scale(0.9);animation-duration:12s,0.9s;z-index:2}
-.decor__item.butterfly.b3{left:58%;top:38%;transform:translate(0,0) scale(0.85);animation-duration:10.5s,0.95s;z-index:1}
-
-@keyframes butterfly-float{
-  0%{transform:translateY(0) translateX(0) rotate(-2deg)}
-  25%{transform:translateY(-8px) translateX(6px) rotate(3deg)}
-  50%{transform:translateY(-2px) translateX(-6px) rotate(-3deg)}
-  75%{transform:translateY(-10px) translateX(8px) rotate(4deg)}
-  100%{transform:translateY(0) translateX(0) rotate(-2deg)}
-}
-
-@keyframes wing-flap{
-  0%{transform:rotate(0deg) scale(1)}
-  45%{transform:rotate(4deg) scale(1.02)}
-  50%{transform:rotate(0deg) scale(1)}
-  95%{transform:rotate(-4deg) scale(0.98)}
-  100%{transform:rotate(0deg) scale(1)}
-}
-
-/* Paillettes supplémentaires : petites particules lumineuses qui scintillent */
-.decor__item.sparkle{animation:twinkle 3.6s linear infinite;filter:drop-shadow(0 6px 10px rgba(255,255,255,0.6));mix-blend-mode:screen}
-
-/* Pétales flottants (pour les éléments petal) */
-.decor__item.petal{animation:petal-drift 9s linear infinite;opacity:0.95}
-
-@keyframes petal-drift{
-  0%{transform:translateY(0) rotate(0deg) translateX(0);opacity:0}
-  10%{opacity:1}
-  50%{transform:translateY(40px) rotate(60deg) translateX(12px);opacity:0.9}
-  100%{transform:translateY(120px) rotate(180deg) translateX(-6px);opacity:0}
-}
-
-/* Confettis doux (ajustement visuel) */
-.confetti{border-radius:4px;opacity:0.95}
-
-/* Douceur générale : limiter l'intensité par défaut */
-.decor__item{opacity:0.95}
-
-/* Respect prefers-reduced-motion : réduire tout mouvement */
-@media (prefers-reduced-motion: reduce){
-  .butterfly, .decor__item.twinkle, .decor__item.petal, .confetti, .decor__item{animation:none !important;transition:none !important}
-}
-
-/* fin du fichier CSS - styles additionnels complétés */
