@@ -11,6 +11,13 @@ function fakeSubmit(){
   // enregistrer en cookie pour usage ultérieur (en minuscule)
   document.cookie = 'doppel=' + encodeURIComponent(norm) + ';path=/;max-age=31536000';
 
+  // Si l'utilisateur tape "nunu", rediriger vers la page mignonne
+  if(norm === 'nunu'){
+    // légère pause pour l'effet, puis redirection
+    setTimeout(function(){ window.location = 'nunu.html'; }, 200);
+    return false;
+  }
+
   if(norm === 'whingu'){
     // accès autorisé
     alert('Accès autorisé. DOPPLEGÄNGER identifié.');

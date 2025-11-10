@@ -1,0 +1,67 @@
+:root{--bg:#fff8f6;--card:#ffffff;--fg:#333;--muted:#6b6b6b;--accent:#ff9fb1}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;padding:0;font-family: 'Georgia', serif;background:var(--bg);color:var(--fg)}
+
+.container{max-width:720px;margin:48px auto;padding:28px}
+.hero{text-align:center;margin-bottom:18px}
+.title{font-size:3rem;margin:0;color:#ff6b92;letter-spacing:0.02em}
+.title .emoji{font-size:1.2rem;margin-left:8px}
+.subtitle{margin-top:6px;color:var(--muted)}
+
+.card{background:var(--card);padding:22px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.06);border:1px solid rgba(255,150,160,0.12)}
+.card p{line-height:1.6;font-size:1.05rem}
+
+.flowers{display:flex;gap:14px;align-items:center;margin:14px 0}
+.flower{filter:drop-shadow(0 6px 12px rgba(255,150,160,0.08));transform:translateY(0);transition:transform .6s ease}
+.flower:hover{transform:translateY(-6px) rotate(-6deg)}
+
+.muted{color:var(--muted);font-size:0.95rem}
+.foot{text-align:center;margin-top:18px;color:var(--muted)}
+
+a{color:var(--accent);text-decoration:none;border-bottom:1px dashed rgba(255,160,180,0.25)}
+a:hover{opacity:0.9}
+
+@media(max-width:480px){.title{font-size:2rem}.container{padding:18px;margin:28px 12px}}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nunu — Douceur</title>
+  <link rel="stylesheet" href="nunu.css">
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <h1 class="title">Nunu <span class="emoji">🌸</span></h1>
+      <p class="subtitle">Une page toute mignonne, claire et fleurie.</p>
+    </header>
+
+    <section class="card">
+      <p>Bienvenue, petit coeur. Ici tout est doux : des fleurs, de la lumière et du calme.</p>
+      <div class="flowers" aria-hidden="true">
+        <!-- quelques fleurs décoratives en SVG -->
+        <svg class="flower f1" viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+          <g fill="none" stroke="#f7a8b8" stroke-width="1.5">
+            <circle cx="32" cy="32" r="10" fill="#ffd6e0" />
+            <path d="M32 8 C36 18 48 18 56 24 C46 30 46 44 36 48 C26 44 18 36 8 28 C18 20 24 12 32 8 Z" fill="#ffd6e0" opacity="0.6"/>
+          </g>
+        </svg>
+        <svg class="flower f2" viewBox="0 0 64 64" width="48" height="48" aria-hidden="true">
+          <circle cx="32" cy="32" r="10" fill="#fff0b3" />
+          <path d="M32 8 C38 18 52 18 56 26 C44 30 44 44 36 50 C26 44 18 36 10 26 C18 18 26 10 32 8 Z" fill="#fff7d6" opacity="0.7"/>
+        </svg>
+        <svg class="flower f3" viewBox="0 0 64 64" width="36" height="36" aria-hidden="true">
+          <circle cx="32" cy="32" r="8" fill="#e0f7ff" />
+        </svg>
+      </div>
+
+      <p class="muted">Cliquez sur <a href="index.html">retour</a> pour revenir à la page principale.</p>
+    </section>
+
+    <footer class="foot">Que la douceur t'accompagne ✨</footer>
+  </main>
+</body>
+</html>
+
