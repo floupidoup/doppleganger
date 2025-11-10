@@ -62,11 +62,34 @@ setTimeout(maybeReveal,1200);
   var ctx = null;
   var noiseNode = null; // BufferSource
   var noiseGain = null;
+  var masterGain = null; // gain maître pour contrôler le volume perçu
+  // Ajustez cette constante pour changer le volume global du bruit (linéaire)
+  // Exemples : 0.003 (discret), 0.0008 (très discret), 0.0002 (presque inaudible)
+  var DEFAULT_MASTER_GAIN = 0.00001; // valeur très basse par défaut (encore diminuée)
   var isPlaying = false;
 
   function createNoise(){
     if(!ctx) ctx = new AudioContext();
-    // buffer: 2 seconds mono
+    // ensure masterGain exists and has a low default value
+    if(!masterGain){
+      masterGain = ctx.createGain();
+      // très faible par défaut, ajustable via DEFAULT_MASTER_GAIN
+      masterGain.gain.value = DEFAULT_MASTER_GAIN;
+      masterGain.connect(ctx.destination);
+    }
+
+    // expose simple console API to adjust volume at runtime
+    try{
+      window.setNoiseVolume = function(v){
+        if(typeof v !== 'number') { console.warn('setNoiseVolume: valeur numérique attendue'); return; }
+        if(!ctx){ DEFAULT_MASTER_GAIN = v; console.log('DEFAULT_MASTER_GAIN mis à jour (avant AudioContext):', v); return; }
+        if(!masterGain){ masterGain = ctx.createGain(); masterGain.gain.value = v; masterGain.connect(ctx.destination); }
+        try{ masterGain.gain.setValueAtTime(v, ctx.currentTime || 0); }catch(e){ masterGain.gain.value = v; }
+        console.log('masterGain réglé sur', v);
+      };
+      window.getNoiseVolume = function(){ return (masterGain && ctx) ? masterGain.gain.value : DEFAULT_MASTER_GAIN; };
+    }catch(e){ /* ignore if window not writable */ }
+
     var bufferSize = ctx.sampleRate * 2;
     var buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     var data = buffer.getChannelData(0);
@@ -78,9 +101,13 @@ setTimeout(maybeReveal,1200);
     source.loop = true;
 
     var gain = ctx.createGain();
-    gain.gain.value = -3;
+    // set a very low starting gain; we'll ramp up slightly on start to avoid pops
+    // This gain will ramp to 1.0; final loudness is controlled by masterGain.
+    gain.gain.value = 0.00001; // near-silence initial value
 
-    source.connect(gain).connect(ctx.destination);
+    // connect through masterGain so we can adjust perceived volume globally
+    source.connect(gain);
+    gain.connect(masterGain);
 
     return {source: source, gain: gain};
   }
@@ -93,8 +120,14 @@ setTimeout(maybeReveal,1200);
     try{
       if(ctx.state === 'suspended') ctx.resume();
     }catch(e){}
-    // start the source only if context is running or the browser allows it
+    // apply a short fade-in to reach a comfortable listening level
     try{
+      var now = ctx.currentTime || 0;
+      // Ramp the per-source gain to full (1.0) quickly; masterGain controls final loudness.
+      noiseGain.gain.setValueAtTime(0.00001, now);
+      noiseGain.gain.linearRampToValueAtTime(1.0, now + 0.25); // fade-in 250ms
+
+      // start the source only if context allows
       noiseNode.start(0);
       isPlaying = true;
     }catch(err){
@@ -134,8 +167,17 @@ setTimeout(maybeReveal,1200);
     document.removeEventListener('keydown', startOnce);
   }
 
-  // try to auto-start on load; if blocked (context suspended), listen for first gesture
-  document.addEventListener('DOMContentLoaded', function(){
+  // expose dev helpers to force start/stop from console if needed
+  try{
+    window.startNoiseNow = function(){
+      if(!ctx){ try{ ctx = new AudioContext(); }catch(e){ console.warn('AudioContext creation failed', e); return; } }
+      try{ startNoise(); }catch(e){ console.warn('startNoise failed (manual)', e); }
+    };
+    window.stopNoiseNow = function(){ try{ stopNoise(); }catch(e){ console.warn('stopNoise failed', e); } };
+  }catch(e){ /* ignore if cannot assign globals */ }
+
+  // try to auto-start immediately; if blocked (context suspended), listen for first gesture
+  (function tryImmediateStart(){
     try{
       ctx = new AudioContext();
     }catch(e){
@@ -143,14 +185,16 @@ setTimeout(maybeReveal,1200);
       return;
     }
 
-    // attempt to start immediately
+    // quick hint for developers: adjust volume via console if needed
+    try{ console.info('Ajuster volume bruit: window.setNoiseVolume(0.0005)  (valeurs comme 0.003 / 0.0008 / 0.0002)'); }catch(e){}
+
+    // attempt to start immediately (best-effort). Many browsers will suspend the context
+    // until a user gesture; we keep a fallback to start on first gesture.
     var attempted = false;
     try{
-      // attempt to start; browsers may keep ctx.state === 'suspended' until gesture
       startNoise();
       attempted = true;
     }catch(err){
-      // failed to start synchronously; we'll fallback to gesture
       console.warn('Auto start failed or blocked, will wait for user gesture', err);
     }
 
@@ -158,12 +202,12 @@ setTimeout(maybeReveal,1200);
     if(!attempted || (ctx && ctx.state === 'suspended') || !isPlaying){
       document.addEventListener('click', startOnce);
       document.addEventListener('keydown', startOnce);
-      // also try a small timeout to resume if browser allows it shortly after load
+      // also try a short timeout to resume if browser allows it shortly after load
       setTimeout(function(){
         if(ctx && ctx.state === 'running' && !isPlaying){
           try{ startNoise(); }catch(e){ console.warn('startNoise after timeout failed', e); }
         }
-      }, 800);
+      }, 300);
     }
 
     // visibility handling: suspend if page hidden, resume only if we were playing
@@ -172,6 +216,5 @@ setTimeout(maybeReveal,1200);
       if(document.hidden){ if(ctx.state === 'running') ctx.suspend(); }
       else { if(ctx.state === 'suspended' && isPlaying) ctx.resume(); }
     });
-  });
-
+  })();
 })();
