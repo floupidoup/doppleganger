@@ -8,9 +8,18 @@
 
 html,body{height:100%;margin:0;padding:0;background:var(--bg);color:var(--fg);font-family: 'Courier New', monospace}
 
-.title{font-size:4rem;letter-spacing:0.4rem;color:#fff;text-shadow:0 0 10px rgba(255,0,0,0.1)}
+/* Title with layered glitch */
+.title{font-size:4rem;letter-spacing:0.4rem;color:#fff;position:relative;display:inline-block}
+.title .title-layer{position:absolute;left:0;top:0;mix-blend-mode:screen;filter:url(#glitch);opacity:0.7;transform:translate(2px,1px)}
+.title .title-main{position:relative;color:#fff;text-shadow:0 0 10px rgba(255,0,0,0.12)}
 
 .marq{color:var(--accent);font-weight:bold;margin-top:0}
+/* replacement for deprecated <marquee> */
+.marq{display:inline-block;white-space:nowrap;overflow:hidden;position:relative}
+.marq::before{content:'';display:inline-block;width:16px}
+.marq{animation:marq-osc 6s linear infinite}
+.marq{color:var(--accent);}
+@keyframes marq-osc{0%{transform:translateX(0)}25%{transform:translateX(18px)}50%{transform:translateX(0)}75%{transform:translateX(-18px)}100%{transform:translateX(0)}}
 
 #main{max-width:760px;margin:20px auto;padding:20px;background:rgba(10,10,10,0.6);border:1px solid rgba(255,0,0,0.06)}
 
@@ -18,7 +27,11 @@ html,body{height:100%;margin:0;padding:0;background:var(--bg);color:var(--fg);fo
 
 .lead{font-size:1.6rem}
 
-.glitch{letter-spacing:0.6rem;color:#666;font-style:italic}
+/* enhanced glitch text */
+.glitch{letter-spacing:0.6rem;color:#999;font-style:italic;position:relative}
+.glitch::before, .glitch::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;}
+.glitch::before{color:#faa;clip-path:inset(0 60% 0 0);transform:translate(-2px,0)}
+.glitch::after{color:#6ff;clip-path:inset(0 0 0 60%);transform:translate(2px,0);mix-blend-mode:screen}
 
 .hint{color:#aaa;background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(0,0,0,0.2));padding:6px}
 
@@ -40,10 +53,29 @@ html,body{height:100%;margin:0;padding:0;background:var(--bg);color:var(--fg);fo
 #noise-toggle{background:#111;border:1px solid rgba(255,0,0,0.12);color:var(--fg);padding:8px 12px;border-radius:4px;cursor:pointer;font-family:inherit}
 #noise-toggle[aria-pressed='true']{box-shadow:0 0 8px rgba(139,0,0,0.2);background:linear-gradient(180deg,#220000,#110000)}
 
-/* intentionally bad CSS */
+/* scribble effect using subtle box-shadow and dashed outline to look hand-drawn */
+.scribble{position:relative}
+.scribble::before{content:'';position:absolute;inset:0;border:2px dashed rgba(255,255,255,0.04);pointer-events:none;transform:rotate(-0.6deg)}
+.scribble::after{content:'';position:absolute;left:-6px;right:-6px;bottom:-6px;height:6px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);mix-blend-mode:multiply;pointer-events:none}
 
-blink{animation:blink 1s step-start 0s infinite}
-@keyframes blink{50%{opacity:0}}
+/* scribble around images */
+.scribble-img img{filter:grayscale(0.35) contrast(0.8) saturate(0.6);box-shadow:0 6px 18px rgba(0,0,0,0.6);border:1px solid rgba(255,0,0,0.03)}
 
-/* crude responsive */
+/* overlay for noise and cryptic glyphs */
+#overlays{position:fixed;inset:0;pointer-events:none;z-index:999}
+#noise-canvas{position:fixed;left:0;top:0;width:100%;height:100%;mix-blend-mode:overlay;opacity:0.08}
+#glyph-overlay{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none}
+#glyph-overlay span{position:absolute;font-family:monospace;color:rgba(255,255,255,0.06);font-size:12px;transform:rotate(-12deg);text-shadow:0 1px 0 rgba(0,0,0,0.6)}
+
+/* subtle animated clipping and jitter for panels */
+.panel{animation:panel-jitter 6s infinite}
+@keyframes panel-jitter{0%{transform:translateY(0)}25%{transform:translateY(-2px)}50%{transform:translateY(0)}75%{transform:translateY(1px)}100%{transform:translateY(0)}}
+
+/* responsive tweaks */
 @media(max-width:480px){.title{font-size:2.2rem}.lead{font-size:1.1rem}}
+
+/* small utility for cryptic text — random letter spacing */
+.cryptic{letter-spacing:0.2rem;opacity:0.95}
+
+/* ensure glitch pseudo-elements work by providing data-text where needed */
+.glitch[data-text]:before, .glitch[data-text]:after{content:attr(data-text)}
