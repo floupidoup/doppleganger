@@ -13,11 +13,11 @@ function fakeSubmit(){
 
   if(norm === 'whingu'){
     // accès autorisé
-    alert('Accès autorisé. Approchez.');
+    alert('Accès autorisé. DOPPLEGÄNGER identifié.');
     setTimeout(function(){ window.location = 'secret.html'; }, 600);
   } else {
     // accès refusé
-    alert('Vous n\'êtes pas un doppelganger.');
+    alert('Ce n\'est pas un doppelganger.');
     // laisser la page en place pour éviter le contournement
   }
   return false;
